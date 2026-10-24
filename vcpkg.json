@@ -1,8 +1,12 @@
 {
-  "name": "lsl-viewer",
-  "version-string": "0.1.0",
-  "dependencies": [
-    "liblsl",
-    "pugixml"
-  ]
+  "name" : "lslviewer",
+  "version-string" : "1.0.0",
+  "builtin-baseline" : "b42e8ed051d17a7f95b9d2a3140c1f9296423712",
+  "dependencies" : [ {
+    "name" : "liblsl",
+    "version>=" : "1.17.7"
+  }, {
+    "name" : "pugixml",
+    "version>=" : "1.16"
+  } ]
 }
