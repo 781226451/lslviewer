@@ -1,0 +1,53 @@
+set(bundle "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/LSL Viewer.app")
+# This viewer needs the native window system and an offscreen backend for smoke
+# checks. Avoid auto-deploying unrelated SQL drivers and their external libraries.
+file(COPY
+    "@QT_BIN_DIR@/../plugins/platforms/libqcocoa.dylib"
+    "@QT_BIN_DIR@/../plugins/platforms/libqoffscreen.dylib"
+    DESTINATION "${bundle}/Contents/PlugIns/platforms"
+)
+execute_process(
+    COMMAND "@MACDEPLOYQT_EXECUTABLE@" "${bundle}"
+        "-qmldir=@SHARED_QML_DIR@" -no-plugins -always-overwrite -codesign=- -verbose=1
+    RESULT_VARIABLE deploy_result
+    OUTPUT_VARIABLE deploy_output
+    ERROR_VARIABLE deploy_errors
+)
+if(NOT deploy_result EQUAL 0 OR "${deploy_output}${deploy_errors}" MATCHES "ERROR:")
+    message(FATAL_ERROR "macdeployqt failed (${deploy_result}):\n${deploy_output}\n${deploy_errors}")
+endif()
+
+# Check actual Mach-O deployment targets, not only the Info.plist declaration.
+# Include every framework/plugin and every slice of universal Qt libraries.
+file(GLOB_RECURSE bundle_files LIST_DIRECTORIES FALSE "${bundle}/*")
+set(macho_files)
+foreach(path IN LISTS bundle_files)
+    if(IS_SYMLINK "${path}")
+        continue()
+    endif()
+    file(READ "${path}" magic LIMIT 4 HEX)
+    if(magic MATCHES "^(cffaedfe|cefaedfe|feedfacf|feedface|cafebabe|cafebabf|bebafeca|bfbafeca)$")
+        list(APPEND macho_files "${path}")
+    endif()
+endforeach()
+if(NOT macho_files)
+    message(FATAL_ERROR "No Mach-O binaries found in ${bundle}")
+endif()
+execute_process(COMMAND /usr/bin/otool -l ${macho_files}
+    OUTPUT_VARIABLE load_commands COMMAND_ERROR_IS_FATAL ANY)
+string(REGEX MATCHALL "minos[ \t]+[0-9.]+|LC_VERSION_MIN_MACOSX[\r\n \t]+cmdsize[ \t]+[0-9]+[\r\n \t]+version[ \t]+[0-9.]+"
+    version_commands "${load_commands}")
+if(NOT version_commands)
+    message(FATAL_ERROR "Cannot determine minimum macOS versions in ${bundle}")
+endif()
+foreach(command IN LISTS version_commands)
+    string(REGEX MATCH "[0-9.]+$" minimum_version "${command}")
+    if(minimum_version VERSION_GREATER "@CMAKE_OSX_DEPLOYMENT_TARGET@")
+        message(FATAL_ERROR "Bundled binary requires macOS ${minimum_version}, above target @CMAKE_OSX_DEPLOYMENT_TARGET@")
+    endif()
+endforeach()
+list(LENGTH macho_files binary_count)
+message(STATUS "Verified ${binary_count} bundled binaries support macOS @CMAKE_OSX_DEPLOYMENT_TARGET@ or earlier")
+
+execute_process(COMMAND /usr/bin/codesign --verify --deep --strict "${bundle}"
+    COMMAND_ERROR_IS_FATAL ANY)
