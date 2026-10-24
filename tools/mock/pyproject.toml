@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lslviewer-mock"
+version = "0.1.0"
+description = "Deterministic LSL publishers used to test the C++ LSL Viewer"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["pylsl>=1.17,<2"]
+
+[project.scripts]
+lslviewer-mock = "lslviewer_mock.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

@@ -10,6 +10,9 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 .pytest_cache/
+# pytest keeps its tmp_path root under the working directory in this environment
+pytest-of-*/
+pytest-*/
 
 # IDE
 .vs/
