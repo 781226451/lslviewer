@@ -88,3 +88,7 @@ uv run pytest
 ```
 
 详见 [docs/development.md](docs/development.md)。
+
+## 许可证
+
+本项目采用 [MIT 许可证](LICENSE)。仓库内的 `tools/mock` 测试工装一并适用。
