@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info>
+  <name>LSLViewer Demo EEG</name>
+  <type>EEG</type>
+  <desc>
+    <manufacturer>LSLViewer demo</manufacturer>
+    <channels>
+      <channel>
+        <label>C3</label>
+        <unit>microvolts</unit>
+      </channel>
+      <channel>
+        <label>C4</label>
+        <unit>microvolts</unit>
+      </channel>
+    </channels>
+    <device>
+      <serial>DEMO-001</serial>
+    </device>
+  </desc>
+</info>

@@ -1,0 +1,12 @@
+[
+  { "name": "manufacturer", "value": "LSLViewer demo", "depth": 0 },
+  { "name": "channels", "value": "", "depth": 0 },
+  { "name": "channel", "value": "", "depth": 1 },
+  { "name": "label", "value": "C3", "depth": 2 },
+  { "name": "unit", "value": "microvolts", "depth": 2 },
+  { "name": "channel", "value": "", "depth": 1 },
+  { "name": "label", "value": "C4", "depth": 2 },
+  { "name": "unit", "value": "microvolts", "depth": 2 },
+  { "name": "device", "value": "", "depth": 0 },
+  { "name": "serial", "value": "DEMO-001", "depth": 1 }
+]

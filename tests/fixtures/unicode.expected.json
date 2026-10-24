@@ -1,0 +1,6 @@
+[
+  { "name": "description", "value": "复杂嵌套 metadata 示例；设备、实验和信号均为模拟数据。", "depth": 0 },
+  { "name": "manufacturer", "value": "示例制造 🚀", "depth": 0 },
+  { "name": "channel", "value": "", "depth": 0 },
+  { "name": "label", "value": "电极 01", "depth": 1 }
+]

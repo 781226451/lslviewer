@@ -1,0 +1,8 @@
+[
+  { "name": "device", "value": "Alpha", "depth": 0 },
+  { "name": "@serial", "value": "A1", "depth": 1 },
+  { "name": "b", "value": "Bold", "depth": 1 },
+  { "name": "#text", "value": "tail-after-b", "depth": 1 },
+  { "name": "channel", "value": "Ch1", "depth": 1 },
+  { "name": "empty", "value": "", "depth": 0 }
+]

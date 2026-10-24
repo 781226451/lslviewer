@@ -4,6 +4,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickStyle>
+#include <QUrl>
 
 int main(int argc, char *argv[])
 {
@@ -15,7 +16,8 @@ int main(int argc, char *argv[])
     ViewerController controller;
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty(QStringLiteral("viewer"), &controller);
-    engine.loadFromModule("LslViewer", "Main");
+    // Embedded from ../qml/Main.qml at build time; see qt_add_resources in CMakeLists.txt.
+    engine.load(QUrl(QStringLiteral("qrc:/qml/Main.qml")));
     if (engine.rootObjects().isEmpty()) {
         controller.shutdown();
         return 1;

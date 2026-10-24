@@ -1,20 +1,15 @@
-# C++ build output
-cplusplus/build/
-cplusplus/out/
-cplusplus/CMakeUserPresets.json
+# Build output
+/build/
+CMakeUserPresets.json
 
-# Python
+# Python (tools/mock only)
 __pycache__/
 *.py[cod]
 .venv/
 *.egg-info/
-python/src/build/
-python/src/dist/
 .mypy_cache/
 .ruff_cache/
-
-# QML copy created only when building a Python wheel (source is qml/ at the repo root)
-python/src/lslviewer/qml/
+.pytest_cache/
 
 # IDE
 .vs/
